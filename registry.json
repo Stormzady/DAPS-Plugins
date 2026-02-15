@@ -1,0 +1,10 @@
+{
+  "warp": {
+    "desc": "Bookmark and teleport to directories instantly",
+    "url": "https://raw.githubusercontent.com/Stormzady/DAPS-Plugins/main/warp.py"
+  },
+  "calc": {
+    "desc": "Solve math expressions directly in your shell",
+    "url": "https://raw.githubusercontent.com/Stormzady/DAPS-Plugins/main/calc.py"
+  }
+}
