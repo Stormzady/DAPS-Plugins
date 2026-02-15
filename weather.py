@@ -1,21 +1,30 @@
 import urllib.request
-import sys
+import json
 
 def run(args):
-    # If a city is provided, use it. Otherwise, use IP-based detection.
-    if args:
-        city = "+".join(args)
-        url = f"https://wttr.in/{city}?format=3"
-    else:
-        # Default: Detect weather by IP address
-        url = "https://wttr.in/?format=3"
-
     try:
-        # Fetch the weather data
-        with urllib.request.urlopen(url) as response:
-            weather_report = response.read().decode('utf8')
-            print(f"\033[96mWeather report:\033[0m {weather_report}")
+        # 1. Get location based on IP (or city if we wanted to add a search later)
+        # For now, let's stick to IP-based for speed.
+        print("\033[96mLocating...\033[0m")
+        with urllib.request.urlopen("http://ip-api.com/json/") as loc_res:
+            location = json.loads(loc_res.read().decode())
+            lat, lon = location['lat'], location['lon']
+            city = location['city']
+
+        # 2. Get weather from Open-Meteo
+        url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
+        
+        with urllib.request.urlopen(url) as weather_res:
+            data = json.loads(weather_res.read().decode())
+            current = data['current_weather']
+            temp = current['temperature']
+            wind = current['windspeed']
+
+            print(f"\033[92mWeather for {city}:\033[0m")
+            print(f"Temperature: {temp}°C")
+            print(f"Wind Speed:  {wind} km/h")
             return 0
+
     except Exception as e:
-        print(f"Error fetching weather: {e}")
+        print(f"\033[91mWeather Error:\033[0m {e}")
         return 1
