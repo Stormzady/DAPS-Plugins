@@ -7,4 +7,8 @@
     "desc": "Solve math expressions directly in your shell",
     "url": "https://raw.githubusercontent.com/Stormzady/DAPS-Plugins/main/calc.py"
   }
+  "weather": {
+    "desc": "Gets the wather based on selected city or IP address."
+    "url": "https://raw.githubusercontent.com/Stormzady/DAPS-Plugins/main/calc.py"
+  }
 }
